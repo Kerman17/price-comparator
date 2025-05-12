@@ -34,4 +34,69 @@ public class StoreProduct {
     public void updateTimestamp(){
         this.lastUpdated = LocalDateTime.now();
     }
+
+    public StoreProduct() {
+    }
+
+    public StoreProduct(Long id, Store store, Product product, BigDecimal price) {
+        this.id = id;
+        this.store = store;
+        this.product = product;
+        this.price = price;
+    }
+
+    public StoreProduct(Long id, Store store, Product product, BigDecimal price, LocalDateTime lastUpdated) {
+        this.id = id;
+        this.store = store;
+        this.product = product;
+        this.price = price;
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    @Override
+    public String toString() {
+        return "StoreProduct{" +
+                "id=" + id +
+                ", store=" + store +
+                ", product=" + product +
+                ", price=" + price +
+                ", lastUpdated=" + lastUpdated +
+                '}';
+    }
 }
