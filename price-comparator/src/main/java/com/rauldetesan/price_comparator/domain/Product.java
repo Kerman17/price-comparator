@@ -3,6 +3,8 @@ package com.rauldetesan.price_comparator.domain;
 import com.rauldetesan.price_comparator.enums.Unit;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -36,5 +38,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="store_id")
     private Store store;
+
+    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
+    private List<StoreProduct> storeProductList;
 
 }
