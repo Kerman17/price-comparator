@@ -32,4 +32,16 @@ public class StoreController {
     public void addStore(@RequestBody Store store){
         storeService.addStore(store);
     }
+
+    @DeleteMapping("{storeId}")
+    public void deleteStoreById(@PathVariable Long storeId){
+        storeService.deleteStoreById(storeId);
+    }
+
+    @PutMapping({"{storeId}"})
+    public void updateStoreById(@PathVariable Long storeId,
+                                @RequestParam String name){
+
+        storeService.updateStoreById(storeId, name);
+    }
 }
