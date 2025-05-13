@@ -1,6 +1,7 @@
 package com.rauldetesan.price_comparator.services;
 
 import com.rauldetesan.price_comparator.domain.Store;
+import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.StoreRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class StoreService {
@@ -37,7 +37,7 @@ public class StoreService {
 
         // First we search if the store exists
         storeRepository.findById(id)
-                        .orElseThrow(() -> new NoSuchElementException("Store with id: " + id + " does not exist"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Store with id: " + id + " does not exist"));
 
         storeRepository.deleteById(id);
     }
@@ -47,7 +47,7 @@ public class StoreService {
                             String name){
 
         Store store = storeRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Store with id: " + id + " does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("Store with id: " + id + " does not exist"));
 
         if(name != null && name.length()>0)
             store.setName(name);
