@@ -5,6 +5,7 @@ import com.rauldetesan.price_comparator.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -20,6 +21,10 @@ public class StoreService {
     public Store findStoreById(Long id){
         return storeRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Store with id: " + id + " does not exist"));
+    }
+
+    public List<Store> findAllStores(){
+        return storeRepository.findAll();
     }
 
     public void addStore(Store store){

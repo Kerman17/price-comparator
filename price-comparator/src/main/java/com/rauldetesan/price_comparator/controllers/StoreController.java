@@ -5,6 +5,8 @@ import com.rauldetesan.price_comparator.services.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/stores")
 public class StoreController {
@@ -19,6 +21,11 @@ public class StoreController {
     @GetMapping("{storeId}")
     public Store findStoreById(@PathVariable Long storeId){
         return storeService.findStoreById(storeId);
+    }
+
+    @GetMapping
+    public List<Store> findAllStores(){
+        return storeService.findAllStores();
     }
 
     @PostMapping
