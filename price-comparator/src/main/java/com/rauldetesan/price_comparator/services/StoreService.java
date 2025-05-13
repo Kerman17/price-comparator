@@ -21,4 +21,8 @@ public class StoreService {
         return storeRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Store with id: " + id + " does not exist"));
     }
+
+    public void addStore(Store store){
+        storeRepository.save(store);
+    }
 }
