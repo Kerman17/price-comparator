@@ -75,5 +75,18 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    @Transactional
+    public void updateProductPrice(String id,
+                                   double price){
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " does not exist"));
+
+        if(price>0){
+            product.setPrice(price);
+        }
+
+        productRepository.save(product);
+    }
+
 }
 

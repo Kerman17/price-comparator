@@ -59,4 +59,13 @@ public class ProductController {
                 price,
                 currency);
     }
+
+    @PutMapping("{productId}/price")
+    public void updateProductPrice(@PathVariable String productId,
+                                   @RequestParam double price){
+
+        productService.updateProductPrice(productId, price);
+    }
+
+
 }
