@@ -4,6 +4,7 @@ import com.rauldetesan.price_comparator.domain.Discount;
 import com.rauldetesan.price_comparator.domain.Product;
 import com.rauldetesan.price_comparator.domain.Store;
 import com.rauldetesan.price_comparator.dtos.DiscountDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.DiscountRepository;
 import com.rauldetesan.price_comparator.repositories.ProductRepository;
@@ -28,10 +29,24 @@ public class DiscountService {
         this.storeRepository = storeRepository;
     }
 
-    public Discount findDiscountById(Long id){
-        return discountRepository.findById(id)
+    public DiscountResponseDTO findDiscountById(Long id){
+        Discount discount = discountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Discount with id " + id + " does not exist"));
 
+        return entityToDTO(discount);
+    }
+
+    private DiscountResponseDTO entityToDTO(Discount discount){
+        DiscountResponseDTO dto = new DiscountResponseDTO();
+
+        dto.setId(discount.getId());
+        dto.setPercentage(discount.getPercentage());
+        dto.setFromDate(discount.getFromDate());
+        dto.setToDate(discount.getToDate());
+        dto.setProductId(discount.getProduct().getId());
+        dto.setStoreId(discount.getStore().getId());
+
+        return dto;
     }
 
     public List<Discount> findAllDiscounts(){
