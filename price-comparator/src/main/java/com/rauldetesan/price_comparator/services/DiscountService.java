@@ -3,6 +3,7 @@ package com.rauldetesan.price_comparator.services;
 import com.rauldetesan.price_comparator.domain.Discount;
 import com.rauldetesan.price_comparator.domain.Product;
 import com.rauldetesan.price_comparator.domain.Store;
+import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.DiscountRepository;
 import com.rauldetesan.price_comparator.repositories.ProductRepository;
@@ -37,8 +38,23 @@ public class DiscountService {
         return discountRepository.findAll();
     }
 
-    public void addDiscount(Discount discount){
+    public void addDiscount(DiscountDTO dto){
+        Product product = productRepository.findById(dto.getProductId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        Store store = storeRepository.findById(dto.getStoreId())
+                .orElseThrow(() -> new ResourceNotFoundException("Store not found"));
+
+        Discount discount = new Discount();
+        discount.setId(dto.getId());
+        discount.setProduct(product);
+        discount.setStore(store);
+        discount.setFromDate(dto.getFromDate());
+        discount.setToDate(dto.getToDate());
+        discount.setPercentage(dto.getPercentage());
+
         discountRepository.save(discount);
+
     }
 
     public void deleteDiscountById(Long id){

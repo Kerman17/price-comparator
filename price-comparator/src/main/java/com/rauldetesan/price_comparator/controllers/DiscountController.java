@@ -3,6 +3,7 @@ package com.rauldetesan.price_comparator.controllers;
 import com.rauldetesan.price_comparator.domain.Discount;
 import com.rauldetesan.price_comparator.domain.Product;
 import com.rauldetesan.price_comparator.domain.Store;
+import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.services.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class DiscountController {
     }
 
     @PostMapping
-    public void addDiscount(@RequestBody Discount discount){
-        discountService.addDiscount(discount);
+    public void addDiscount(@RequestBody DiscountDTO discountDTO){
+        discountService.addDiscount(discountDTO);
     }
 
     @DeleteMapping("{discountId}")
