@@ -67,5 +67,10 @@ public class ProductController {
         productService.updateProductPrice(productId, price);
     }
 
+    @PutMapping("{productId}/quantity")
+    public void updateProductQuantity(@PathVariable String productId,
+                                      @RequestParam double quantity){
+        productService.updateProductQuantity(productId, quantity);
+    }
 
 }

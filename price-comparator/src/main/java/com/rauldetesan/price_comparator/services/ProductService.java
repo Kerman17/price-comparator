@@ -88,5 +88,19 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    @Transactional
+    public void updateProductQuantity(String id,
+                                      double quantity){
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " does not exist"));
+
+        if(quantity>0){
+            product.setQuantity(quantity);
+        }
+
+        productRepository.save(product);
+    }
+
 }
 
