@@ -37,7 +37,7 @@ public class DiscountService {
         return entityToDTO(discount);
     }
 
-    private DiscountResponseDTO entityToDTO(Discount discount){
+    public DiscountResponseDTO entityToDTO(Discount discount){
         DiscountResponseDTO dto = new DiscountResponseDTO();
 
         dto.setId(discount.getId());
