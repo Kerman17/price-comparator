@@ -54,8 +54,8 @@ public class StoreProductService {
         StoreProductResponseDTO dto = new StoreProductResponseDTO();
 
         dto.setId(storeProduct.getId());
-        dto.setProduct(storeProduct.getProduct());
-        dto.setStore(storeProduct.getStore());
+        dto.setProductId(storeProduct.getProduct().getId());
+        dto.setStoreId(storeProduct.getStore().getId());
         dto.setPrice(storeProduct.getPrice());
         dto.setLastUpdated(storeProduct.getLastUpdated());
 
