@@ -9,8 +9,13 @@ import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.ProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StoreProductService {
@@ -61,4 +66,47 @@ public class StoreProductService {
 
         return dto;
     }
+
+    public List<StoreProductResponseDTO> findStoresProducts(){
+        List<StoreProduct> storeProductList = storeProductRepository.findAll();
+
+        return entityListToDtoListStoreProduct(storeProductList);
+    }
+
+    public List<StoreProductResponseDTO> entityListToDtoListStoreProduct
+            (List<StoreProduct> storeProductList){
+
+        List<StoreProductResponseDTO> dtoList = new ArrayList<>();
+
+        for(StoreProduct storeProduct : storeProductList){
+            StoreProductResponseDTO dto = new StoreProductResponseDTO();
+
+            dto = storeProductEntityToDTO(storeProduct);
+
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
+
+    public void deleteStoreProductById(Long id){
+        storeProductRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Store-Product with id " + id + " does not exist"));
+
+        storeProductRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateStoreProductPrice(Long id,
+                                        BigDecimal price){
+        StoreProduct storeProduct =  storeProductRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Store-Product with id " + id + " does not exist"));
+
+        if(price.compareTo(BigDecimal.ZERO)>0){
+            storeProduct.setPrice(price);
+        }
+
+        storeProductRepository.save(storeProduct);
+    }
+
 }
