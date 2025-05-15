@@ -29,6 +29,13 @@ public class Discount {
     public Discount() {
     }
 
+    public Discount(Long id, LocalDate fromDate, LocalDate toDate, double percentage) {
+        this.id = id;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.percentage = percentage;
+    }
+
     public Discount(Long id, Product product, Store store, LocalDate fromDate, LocalDate toDate, double percentage) {
         this.id = id;
         this.product = product;
@@ -85,6 +92,8 @@ public class Discount {
     public void setPercentage(double percentage) {
         this.percentage = percentage;
     }
+
+
 
     @Override
     public String toString() {

@@ -108,7 +108,28 @@ public class DiscountService {
 
         discountRepository.save(discount);
 
+    }
 
+    @Transactional
+    public void updateDiscountToDate(Long id,
+                                     LocalDate toDate){
+        Discount discount = discountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Discount with id " + id + " does not exist"));
+
+        discount.setToDate(toDate);
+
+        discountRepository.save(discount);
+    }
+
+    @Transactional
+    public void updateDiscountPercentage(Long id,
+                                         double percentage){
+        Discount discount = discountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Discount with id " + id + " does not exist"));
+
+        discount.setPercentage(percentage);
+
+        discountRepository.save(discount);
     }
 
 }

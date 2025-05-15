@@ -7,6 +7,7 @@ import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
 import com.rauldetesan.price_comparator.services.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -56,6 +57,20 @@ public class DiscountController {
                 fromDate,
                 toDate,
                 percentage);
+    }
+
+    @PutMapping("{discountId}/toDate")
+    public void updateDiscountToDate(@PathVariable Long discountId,
+                                     @RequestParam LocalDate toDate){
+        discountService.updateDiscountToDate(discountId, toDate);
+    }
+
+    @PutMapping("{discountId}/percentage")
+    public void updateDiscountPercentage(@PathVariable Long discountId,
+                                         @RequestParam double percentage){
+
+        discountService.updateDiscountPercentage(discountId, percentage);
+
     }
 
 
