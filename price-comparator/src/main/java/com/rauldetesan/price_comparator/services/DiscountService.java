@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,9 +50,26 @@ public class DiscountService {
         return dto;
     }
 
-    public List<Discount> findAllDiscounts(){
-        return discountRepository.findAll();
+    public List<DiscountResponseDTO> entityListToDtoList(List<Discount> discountList){
+        List<DiscountResponseDTO> dtoList = new ArrayList<>();
+
+        for(Discount discount : discountList){
+            DiscountResponseDTO dto = new DiscountResponseDTO();
+
+            dto = entityToDTO(discount);
+
+            dtoList.add(dto);
+        }
+
+        return dtoList;
     }
+
+    public List<DiscountResponseDTO> findAllDiscounts(){
+        List<Discount> discountList = discountRepository.findAll();
+
+        return entityListToDtoList(discountList);
+    }
+
 
     public void addDiscount(DiscountDTO dto){
         Product product = productRepository.findById(dto.getProductId())

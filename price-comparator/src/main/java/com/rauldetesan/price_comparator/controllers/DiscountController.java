@@ -30,7 +30,7 @@ public class DiscountController {
     }
 
     @GetMapping
-    public List<Discount> findAllDiscounts(){
+    public List<DiscountResponseDTO> findAllDiscounts(){
         return discountService.findAllDiscounts();
     }
 
