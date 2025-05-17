@@ -46,6 +46,4 @@ public class StoreProductController {
         storeProductService.updateStoreProductPrice(storeProductId, price);
     }
 
-
-
 }
