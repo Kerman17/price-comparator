@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -32,7 +37,13 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         for(Resource resource : csvFiles){
+            String filename = resource.getFilename();
 
+            System.out.println(getStoreNameFromFileName(filename));
         }
+    }
+
+    private String getStoreNameFromFileName(String filename){
+        return filename.split("_")[0].toLowerCase();
     }
 }
