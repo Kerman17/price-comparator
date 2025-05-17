@@ -4,7 +4,7 @@ import com.rauldetesan.price_comparator.repositories.DiscountRepository;
 import com.rauldetesan.price_comparator.repositories.ProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreRepository;
-import jakarta.annotation.Resource;
+import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -31,6 +31,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        for(Resource resource : csvFiles){
 
+        }
     }
 }
