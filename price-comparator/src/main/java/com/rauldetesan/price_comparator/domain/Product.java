@@ -45,6 +45,17 @@ public class Product {
     public Product() {
     }
 
+    public Product(String id, String name, String category, String brand, double quantity, Unit unit, double price, String currency) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.brand = brand;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.price = price;
+        this.currency = currency;
+    }
+
     public Product(String id, String name, String category, String brand, double quantity, Unit unit, double price, String currency, Store store) {
         this.id = id;
         this.name = name;
