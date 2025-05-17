@@ -7,9 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="store_products", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"store_id", "product_id"})
-})
+@Table(name="store_products")
 public class StoreProduct {
 
     @Id
@@ -30,12 +28,6 @@ public class StoreProduct {
     @Column(name="last_updated")
     private LocalDateTime lastUpdated;
 
-    @PrePersist
-    @PreUpdate
-    public void updateTimestamp(){
-        this.lastUpdated = LocalDateTime.now();
-    }
-
     public StoreProduct() {
     }
 
@@ -53,6 +45,7 @@ public class StoreProduct {
         this.price = price;
         this.lastUpdated = lastUpdated;
     }
+
 
     public Long getId() {
         return id;
