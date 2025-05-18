@@ -1,7 +1,6 @@
 package com.rauldetesan.price_comparator.dtos;
 
-import com.rauldetesan.price_comparator.domain.Product;
-import com.rauldetesan.price_comparator.domain.Store;
+import com.rauldetesan.price_comparator.enums.Unit;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,7 +10,13 @@ public class StoreProductDTO {
     private Long id;
     private Long storeId;
     private String productId;
+    private String name;
+    private String category;
+    private String brand;
+    private double quantity;
+    private Unit unit;
     private BigDecimal price;
+    private String currency;
     private LocalDateTime lastUpdated;
 
     public Long getId() {
@@ -38,12 +43,60 @@ public class StoreProductDTO {
         this.productId = productId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public LocalDateTime getLastUpdated() {

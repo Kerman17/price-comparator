@@ -1,12 +1,10 @@
 package com.rauldetesan.price_comparator.services;
 
-import com.rauldetesan.price_comparator.domain.Product;
 import com.rauldetesan.price_comparator.domain.Store;
 import com.rauldetesan.price_comparator.domain.StoreProduct;
 import com.rauldetesan.price_comparator.dtos.StoreProductDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductResponseDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
-import com.rauldetesan.price_comparator.repositories.ProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreRepository;
 import jakarta.transaction.Transactional;
@@ -20,19 +18,15 @@ import java.util.List;
 @Service
 public class StoreProductService {
     private final StoreProductRepository storeProductRepository;
-    private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
 
     @Autowired
-    public StoreProductService(StoreProductRepository storeProductRepository, ProductRepository productRepository, StoreRepository storeRepository) {
+    public StoreProductService(StoreProductRepository storeProductRepository, StoreRepository storeRepository) {
         this.storeProductRepository = storeProductRepository;
-        this.productRepository = productRepository;
         this.storeRepository = storeRepository;
     }
 
     public void addStoreProduct(StoreProductDTO dto){
-        Product product = productRepository.findById(dto.getProductId())
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         Store store = storeRepository.findById(dto.getStoreId())
                 .orElseThrow(() -> new ResourceNotFoundException("Store not found"));
@@ -41,8 +35,16 @@ public class StoreProductService {
 
         storeProduct.setId(dto.getId());
         storeProduct.setPrice(dto.getPrice());
-        storeProduct.setProduct(product);
         storeProduct.setStore(store);
+        storeProduct.setProductId(dto.getProductId());
+
+        storeProduct.setBrand(dto.getBrand());
+        storeProduct.setName(dto.getName());
+        storeProduct.setUnit(dto.getUnit());
+        storeProduct.setQuantity(dto.getQuantity());
+
+        storeProduct.setCategory(dto.getCategory());
+        storeProduct.setCurrency(dto.getCurrency());
 
         storeProductRepository.save(storeProduct);
     }
@@ -59,10 +61,10 @@ public class StoreProductService {
         StoreProductResponseDTO dto = new StoreProductResponseDTO();
 
         dto.setId(storeProduct.getId());
-        dto.setProductId(storeProduct.getProduct().getId());
+        dto.setProductId(storeProduct.getProductId());
         dto.setStoreId(storeProduct.getStore().getId());
         dto.setPrice(storeProduct.getPrice());
-        dto.setLastUpdated(storeProduct.getLastUpdated());
+
 
         return dto;
     }

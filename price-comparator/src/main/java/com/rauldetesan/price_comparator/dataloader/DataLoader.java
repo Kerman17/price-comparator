@@ -1,13 +1,11 @@
 package com.rauldetesan.price_comparator.dataloader;
 
 import com.rauldetesan.price_comparator.domain.Discount;
-import com.rauldetesan.price_comparator.domain.Product;
 import com.rauldetesan.price_comparator.domain.Store;
 import com.rauldetesan.price_comparator.domain.StoreProduct;
 import com.rauldetesan.price_comparator.enums.Unit;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.DiscountRepository;
-import com.rauldetesan.price_comparator.repositories.ProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreRepository;
 import org.springframework.core.io.Resource;
@@ -18,12 +16,9 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -32,15 +27,13 @@ public class DataLoader implements CommandLineRunner {
     private Resource[] csvFiles;
 
     private final StoreRepository storeRepository;
-    private final ProductRepository productRepository;
     private final DiscountRepository discountRepository;
     private final StoreProductRepository storeProductRepository;
 
     // we inject the repositories
-    public DataLoader(StoreRepository storeRepository, ProductRepository productRepository,
+    public DataLoader(StoreRepository storeRepository,
                       DiscountRepository discountRepository, StoreProductRepository storeProductRepository) {
         this.storeRepository = storeRepository;
-        this.productRepository = productRepository;
         this.discountRepository = discountRepository;
         this.storeProductRepository = storeProductRepository;
     }
@@ -73,17 +66,17 @@ public class DataLoader implements CommandLineRunner {
             if(!filename.contains("discounts"))loadProductsFromFiles(filename, lines);
         }
 
-        for(Resource resource:csvFiles){
-            String filename = resource.getFilename();
-
-            String content = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-
-            List<String> lines = Arrays.stream(content.split("\n"))
-                    .filter(line -> !line.isEmpty())
-                    .toList();
-
-            if(filename.contains("discounts"))loadDiscountsFromFiles(filename, lines);
-        }
+//        for(Resource resource:csvFiles){
+//            String filename = resource.getFilename();
+//
+//            String content = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+//
+//            List<String> lines = Arrays.stream(content.split("\n"))
+//                    .filter(line -> !line.isEmpty())
+//                    .toList();
+//
+//            if(filename.contains("discounts"))loadDiscountsFromFiles(filename, lines);
+//        }
     }
 
 
@@ -91,6 +84,7 @@ public class DataLoader implements CommandLineRunner {
 
         String storeName = getStoreNameFromFileName(filename);
         String date = getDateFromFileName(filename);
+        LocalDate localDate = LocalDate.parse(date);
         Store store = storeRepository.findByNameIgnoreCase(storeName)
                 .orElseThrow(() -> new ResourceNotFoundException("Store not existent"));
 
@@ -114,10 +108,9 @@ public class DataLoader implements CommandLineRunner {
             double price = Double.parseDouble(parts[6].trim());
             String currency = parts[7].trim();
 
-            Product product = new Product(productId, name, category, brand, quantity, unit, price, currency, store);
-            productRepository.save(product);
-
-            StoreProduct storeProduct = new StoreProduct(null, store, product, BigDecimal.valueOf(price), LocalDate.parse(date).atStartOfDay());
+            StoreProduct storeProduct = new StoreProduct(null, store, productId, name, category, brand, quantity
+                    , unit, BigDecimal.valueOf(price)
+                    , currency, localDate.atStartOfDay());
             storeProductRepository.save(storeProduct);
         }
     }
@@ -140,11 +133,8 @@ public class DataLoader implements CommandLineRunner {
             LocalDate toDate = LocalDate.parse((parts[7].trim()));
             double percentage = Double.parseDouble(parts[8].trim());
 
-            Product product = productRepository.findById(productId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Product not existent"));
 
-
-            Discount discount = new Discount(null, product, store, fromDate, toDate, percentage);
+            Discount discount = new Discount(null, fromDate, toDate, percentage);
             discountRepository.save(discount);
         }
 

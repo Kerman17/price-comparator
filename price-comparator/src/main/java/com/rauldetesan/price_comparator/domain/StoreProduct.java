@@ -1,6 +1,6 @@
 package com.rauldetesan.price_comparator.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rauldetesan.price_comparator.enums.Unit;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -18,31 +18,53 @@ public class StoreProduct {
     @JoinColumn(name="store_id")
     private Store store;
 
-    @ManyToOne(optional = false)
     @JoinColumn(name="product_id")
-    private Product product;
+    private String productId;
+
+    @Column(name="product_name", nullable = false)
+    private String name;
+
+    @Column(name="category_name", nullable = false)
+    private String category;
+
+    @Column(nullable = false)
+    private String brand;
+
+    @Column(name="package_quantity", nullable = false)
+    private double quantity;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "package_unit")
+    private Unit unit;
 
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private String currency;
+
+
+
     @Column(name="last_updated")
-    private LocalDateTime lastUpdated;
+    private LocalDateTime lastUpdated = LocalDateTime.now();
 
     public StoreProduct() {
     }
 
-    public StoreProduct(Long id, Store store, Product product, BigDecimal price) {
-        this.id = id;
-        this.store = store;
-        this.product = product;
-        this.price = price;
-    }
 
-    public StoreProduct(Long id, Store store, Product product, BigDecimal price, LocalDateTime lastUpdated) {
+    public StoreProduct(Long id, Store store, String product, String name, String category,
+                        String brand, double quantity, Unit unit, BigDecimal price,
+                        String currency, LocalDateTime lastUpdated) {
         this.id = id;
         this.store = store;
-        this.product = product;
+        this.productId = product;
+        this.name = name;
+        this.category = category;
+        this.brand = brand;
+        this.quantity = quantity;
+        this.unit = unit;
         this.price = price;
+        this.currency = currency;
         this.lastUpdated = lastUpdated;
     }
 
@@ -63,12 +85,52 @@ public class StoreProduct {
         this.store = store;
     }
 
-    public Product getProduct() {
-        return product;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     public BigDecimal getPrice() {
@@ -79,8 +141,12 @@ public class StoreProduct {
         this.price = price;
     }
 
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     @Override
@@ -88,7 +154,7 @@ public class StoreProduct {
         return "StoreProduct{" +
                 "id=" + id +
                 ", store=" + store +
-                ", product=" + product +
+                ", product=" + productId +
                 ", price=" + price +
                 ", lastUpdated=" + lastUpdated +
                 '}';

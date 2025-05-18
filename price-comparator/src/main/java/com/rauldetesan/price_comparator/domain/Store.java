@@ -18,9 +18,6 @@ public class Store {
     private String name;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private List<Discount> discounts;
-
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<StoreProduct> storeProductList;
 
     public Store() {
@@ -31,10 +28,9 @@ public class Store {
         this.name = name;
     }
 
-    public Store(Long id, String name, List<Discount> discounts, List<StoreProduct> storeProductList) {
+    public Store(Long id, String name, List<StoreProduct> storeProductList) {
         this.id = id;
         this.name = name;
-        this.discounts = discounts;
         this.storeProductList = storeProductList;
     }
 
@@ -54,13 +50,6 @@ public class Store {
         this.name = name;
     }
 
-    public List<Discount> getDiscounts() {
-        return discounts;
-    }
-
-    public void setDiscounts(List<Discount> discounts) {
-        this.discounts = discounts;
-    }
 
     public List<StoreProduct> getStoreProductList() {
         return storeProductList;
@@ -75,7 +64,6 @@ public class Store {
         return "Store{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", discounts=" + discounts +
                 ", storeProductList=" + storeProductList +
                 '}';
     }
