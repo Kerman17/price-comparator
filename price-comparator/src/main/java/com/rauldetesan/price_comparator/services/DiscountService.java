@@ -5,17 +5,22 @@ import com.rauldetesan.price_comparator.domain.Product;
 import com.rauldetesan.price_comparator.domain.Store;
 import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountWithProductDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.DiscountRepository;
 import com.rauldetesan.price_comparator.repositories.ProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DiscountService {
@@ -63,6 +68,7 @@ public class DiscountService {
 
         return dtoList;
     }
+
 
     public List<DiscountResponseDTO> findAllDiscounts(){
         List<Discount> discountList = discountRepository.findAll();
@@ -148,6 +154,24 @@ public class DiscountService {
         discount.setPercentage(percentage);
 
         discountRepository.save(discount);
+    }
+
+    public List<DiscountWithProductDTO> findTopDiscounts(int limit){
+        List<Discount> discounts = discountRepository.findTopDiscounts(limit);
+
+        return discounts.stream()
+                .map(d -> new DiscountWithProductDTO(
+                      d.getId(),
+                      d.getProduct().getId(),
+                      d.getStore().getId(),
+                      d.getFromDate(),
+                      d.getToDate(),
+                      d.getPercentage(),
+                      d.getProduct().getName(),
+                      d.getProduct().getBrand(),
+                      d.getStore().getName()
+                ))
+                .collect(Collectors.toList());
     }
 
 }
