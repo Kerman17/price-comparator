@@ -12,13 +12,12 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name="product_id", nullable = false)
-    private Product product;
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "store_product_id")
+    private StoreProduct storeProduct;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name="store_id", nullable = false)
-    private Store store;
+    @Column(nullable = false)
+    private String productId;
 
     private LocalDate fromDate;
 
@@ -29,17 +28,10 @@ public class Discount {
     public Discount() {
     }
 
-    public Discount(Long id, LocalDate fromDate, LocalDate toDate, double percentage) {
+    public Discount(Long id, StoreProduct storeProduct, String productId, LocalDate fromDate, LocalDate toDate, double percentage) {
         this.id = id;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.percentage = percentage;
-    }
-
-    public Discount(Long id, Product product, Store store, LocalDate fromDate, LocalDate toDate, double percentage) {
-        this.id = id;
-        this.product = product;
-        this.store = store;
+        this.storeProduct = storeProduct;
+        this.productId = productId;
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.percentage = percentage;
@@ -53,20 +45,20 @@ public class Discount {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public StoreProduct getStoreProduct() {
+        return storeProduct;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setStoreProduct(StoreProduct storeProduct) {
+        this.storeProduct = storeProduct;
     }
 
-    public Store getStore() {
-        return store;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public LocalDate getFromDate() {
@@ -93,14 +85,12 @@ public class Discount {
         this.percentage = percentage;
     }
 
-
-
     @Override
     public String toString() {
         return "Discount{" +
                 "id=" + id +
-                ", product=" + product +
-                ", store=" + store +
+                ", storeProduct=" + storeProduct +
+                ", productId='" + productId + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
                 ", percentage=" + percentage +

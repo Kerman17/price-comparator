@@ -1,5 +1,7 @@
 package com.rauldetesan.price_comparator.dtos;
 
+import com.rauldetesan.price_comparator.domain.StoreProduct;
+
 import java.time.LocalDate;
 
 /*
@@ -13,8 +15,7 @@ import java.time.LocalDate;
 
 public class DiscountResponseDTO {
     private Long id;
-    private String productId;
-    private Long storeId;
+    private StoreProduct storeProduct;
     private LocalDate fromDate;
     private LocalDate toDate;
     private double percentage;
@@ -27,20 +28,12 @@ public class DiscountResponseDTO {
         this.id = id;
     }
 
-    public String getProductId() {
-        return productId;
+    public StoreProduct getStoreProduct() {
+        return storeProduct;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public Long getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(Long storeId) {
-        this.storeId = storeId;
+    public void setStoreProduct(StoreProduct storeProduct) {
+        this.storeProduct = storeProduct;
     }
 
     public LocalDate getFromDate() {

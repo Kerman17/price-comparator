@@ -17,8 +17,10 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -66,17 +68,18 @@ public class DataLoader implements CommandLineRunner {
             if(!filename.contains("discounts"))loadProductsFromFiles(filename, lines);
         }
 
-//        for(Resource resource:csvFiles){
-//            String filename = resource.getFilename();
-//
-//            String content = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-//
-//            List<String> lines = Arrays.stream(content.split("\n"))
-//                    .filter(line -> !line.isEmpty())
-//                    .toList();
-//
-//            if(filename.contains("discounts"))loadDiscountsFromFiles(filename, lines);
-//        }
+        // LOAD DISCOUNTS
+        for(Resource resource:csvFiles){
+            String filename = resource.getFilename();
+
+            String content = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+
+            List<String> lines = Arrays.stream(content.split("\n"))
+                    .filter(line -> !line.isEmpty())
+                    .toList();
+
+            if(filename.contains("discounts"))loadDiscountsFromFiles(filename, lines);
+        }
     }
 
 
@@ -91,13 +94,6 @@ public class DataLoader implements CommandLineRunner {
         for(int i=1; i < lines.size(); i++){
             String line = lines.get(i);
             String[] parts = line.split(";");
-
-//            if(parts.length != 8){
-//                System.err.println("Skip malformed line: " + line);
-//                continue;
-//            }
-
-            Long storeId = store.getId();
 
             String productId = parts[0].trim();
             String name = parts[1].trim();
@@ -121,20 +117,18 @@ public class DataLoader implements CommandLineRunner {
         Store store = storeRepository.findByNameIgnoreCase(storeName)
                 .orElseThrow(() -> new ResourceNotFoundException("Store not existent"));
 
-        Long storeId = store.getId();
-
 
         for(int i=1;i<lines.size();i++){
             String line = lines.get(i);
-            String parts[] = line.split(";");
+            String[] parts = line.split(";");
 
             String productId = parts[0].trim();
             LocalDate fromDate = LocalDate.parse(parts[6].trim());
             LocalDate toDate = LocalDate.parse((parts[7].trim()));
             double percentage = Double.parseDouble(parts[8].trim());
 
-
-            Discount discount = new Discount(null, fromDate, toDate, percentage);
+            Discount discount = new Discount(null, null, productId,
+                    fromDate, toDate, percentage);
             discountRepository.save(discount);
         }
 

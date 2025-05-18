@@ -43,8 +43,6 @@ public class StoreProduct {
     @Column(nullable = false)
     private String currency;
 
-
-
     @Column(name="last_updated")
     private LocalDateTime lastUpdated = LocalDateTime.now();
 
