@@ -70,7 +70,19 @@ public class DataLoader implements CommandLineRunner {
                     .filter(line -> !line.isEmpty())
                     .toList();
 
-            loadProductsFromFiles(filename, lines);
+            if(!filename.contains("discounts"))loadProductsFromFiles(filename, lines);
+        }
+
+        for(Resource resource:csvFiles){
+            String filename = resource.getFilename();
+
+            String content = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+
+            List<String> lines = Arrays.stream(content.split("\n"))
+                    .filter(line -> !line.isEmpty())
+                    .toList();
+
+            if(filename.contains("discounts"))loadDiscountsFromFiles(filename, lines);
         }
     }
 
@@ -108,6 +120,34 @@ public class DataLoader implements CommandLineRunner {
             StoreProduct storeProduct = new StoreProduct(null, store, product, BigDecimal.valueOf(price), LocalDate.parse(date).atStartOfDay());
             storeProductRepository.save(storeProduct);
         }
+    }
+
+    public void loadDiscountsFromFiles(String filename, List<String> lines){
+        String storeName = getStoreNameFromFileName(filename);
+
+        Store store = storeRepository.findByNameIgnoreCase(storeName)
+                .orElseThrow(() -> new ResourceNotFoundException("Store not existent"));
+
+        Long storeId = store.getId();
+
+
+        for(int i=1;i<lines.size();i++){
+            String line = lines.get(i);
+            String parts[] = line.split(";");
+
+            String productId = parts[0].trim();
+            LocalDate fromDate = LocalDate.parse(parts[6].trim());
+            LocalDate toDate = LocalDate.parse((parts[7].trim()));
+            double percentage = Double.parseDouble(parts[8].trim());
+
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Product not existent"));
+
+
+            Discount discount = new Discount(null, product, store, fromDate, toDate, percentage);
+            discountRepository.save(discount);
+        }
+
     }
 
     private String getStoreNameFromFileName(String filename){
