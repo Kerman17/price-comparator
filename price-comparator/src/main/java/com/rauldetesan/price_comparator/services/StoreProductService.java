@@ -2,6 +2,7 @@ package com.rauldetesan.price_comparator.services;
 
 import com.rauldetesan.price_comparator.domain.Store;
 import com.rauldetesan.price_comparator.domain.StoreProduct;
+import com.rauldetesan.price_comparator.dtos.PriceHistoryDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductResponseDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
@@ -12,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StoreProductService {
@@ -109,6 +113,26 @@ public class StoreProductService {
         }
 
         storeProductRepository.save(storeProduct);
+    }
+
+    public List<PriceHistoryDTO> findPriceHistoryByProductName(String productName,
+                                                               String storeName,
+                                                               String brand,
+                                                               String categoryName) {
+        List<Object[]> rows = storeProductRepository
+                .findPriceHistoryByProductName(productName, storeName, brand, categoryName);
+
+        return rows.stream().map(row -> {
+            // Cast java.sql.Date to LocalDate
+            LocalDate date = ((java.sql.Date) row[0]).toLocalDate();
+            double price = ((Number) row[1]).doubleValue();
+            String product = (String) row[2];
+            String brandName = (String) row[3];
+            String category = (String) row[4];
+            String store = (String) row[5];
+
+            return new PriceHistoryDTO(date, price, product, brandName, category, store);
+        }).collect(Collectors.toList());
     }
 
 }

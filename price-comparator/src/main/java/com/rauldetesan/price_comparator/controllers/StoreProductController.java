@@ -1,5 +1,6 @@
 package com.rauldetesan.price_comparator.controllers;
 
+import com.rauldetesan.price_comparator.dtos.PriceHistoryDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductResponseDTO;
 import com.rauldetesan.price_comparator.services.StoreProductService;
@@ -44,6 +45,17 @@ public class StoreProductController {
     public void updateStoreProductPrice(@PathVariable Long storeProductId,
                                         @RequestParam BigDecimal price){
         storeProductService.updateStoreProductPrice(storeProductId, price);
+    }
+
+    @GetMapping("/price-history")
+    public List<PriceHistoryDTO> findPriceHistoryByProductName(
+            @RequestParam String productName,
+            @RequestParam(required = false) String storeName,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String categoryName
+    ){
+        return storeProductService
+                .findPriceHistoryByProductName(productName, storeName, brand, categoryName);
     }
 
 }
