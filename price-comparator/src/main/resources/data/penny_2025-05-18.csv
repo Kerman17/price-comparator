@@ -1,0 +1,15 @@
+product_id;product_name;product_category;brand;package_quantity;package_unit;price;currency  
+P007;meteoritzi covrigi;gustări;Meteortizi;75;g;2.69;RON
+P009;tăiței de orez;mâncare de stradă;Mei Tai Asia;100;g;3.99;RON
+P010;tăiței mie;mâncare de stradă;Mei Tai Asia;250;g;4.49;RON
+P011;sos de soia;sosuri;Mei Tai Asia;250;ml;4.99;RON
+P013;sos chili;sosuri;Mei Tai Asia;700;ml;8.99;RON
+P017;mango felii;fructe conservate;Mei Tai Asia;425;g;5.99;RON
+P019;noodles chinezesc;mâncare de stradă;Mei Tai Asia;330;g;18.99;RON
+P020;lapte zuzu;lactate;Zuzu;2.5;l;23.10;RON
+P021;iaurt grecesc;lactate;Olympus;450;g;10.80;RON
+P023;ouă mărimea M;ouă;Ferma Veche;20;buc;19.50;RON
+P027;brânză telemea;lactate;Hochland;0.250;kg;9.10;RON
+P029;pâine albă;panificație;K-Classic;0.44;kg;3.75;RON
+P033;roșii cherry;legume și fructe;K-Bio;330;g;9.25;RON
+P034;cartofi albi;legume și fructe;Penny;1;kg;4.29;RON
