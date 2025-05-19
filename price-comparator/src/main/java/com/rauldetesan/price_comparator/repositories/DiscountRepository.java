@@ -16,7 +16,15 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
     //Best active discounts
 
     @Query(value = """
-    SELECT d.*, p.price as "Price without discount", p.store_id, p.id as "Store Product Id"
+    SELECT
+    d.id,
+    d.percentage,
+    d.from_date,
+    d.to_date,
+    p.price as "Price without discount",
+    p.store_id,
+    p.id as "Store Product Id",
+    p.product_name
     FROM discounts d
     JOIN store_products p on d.store_product_id = p.id
     WHERE CURRENT_DATE BETWEEN d.from_date AND d.to_date

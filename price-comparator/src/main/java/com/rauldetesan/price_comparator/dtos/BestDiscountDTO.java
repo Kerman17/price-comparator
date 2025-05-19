@@ -12,11 +12,15 @@ public class BestDiscountDTO {
     private double priceWithoutDiscount;
     private Long storeId;
     private Long storeProductId;
+    private String productName;
 
     public BestDiscountDTO() {
     }
 
-    public BestDiscountDTO(Long discountId, int percentage, LocalDate fromDate, LocalDate toDate, double priceWithoutDiscount, Long storeId, Long storeProductId) {
+    public BestDiscountDTO(Long discountId, int percentage, LocalDate fromDate,
+                           LocalDate toDate, double priceWithoutDiscount, Long storeId,
+                           Long storeProductId,
+                            String productName) {
         this.discountId = discountId;
         this.percentage = percentage;
         this.fromDate = fromDate;
@@ -24,6 +28,15 @@ public class BestDiscountDTO {
         this.priceWithoutDiscount = priceWithoutDiscount;
         this.storeId = storeId;
         this.storeProductId = storeProductId;
+        this.productName = productName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public Long getDiscountId() {

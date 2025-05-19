@@ -2,6 +2,7 @@ package com.rauldetesan.price_comparator.services;
 
 import com.rauldetesan.price_comparator.domain.Discount;
 import com.rauldetesan.price_comparator.domain.StoreProduct;
+import com.rauldetesan.price_comparator.dtos.BestDiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
@@ -12,9 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
+
 
 @Service
 public class DiscountService {
@@ -67,6 +72,40 @@ public class DiscountService {
 
         discountRepository.deleteById(id);
     }
+
+    public List<BestDiscountDTO> findBestActiveDiscounts(int limit) {
+
+        List<Object[]> rows = discountRepository.findBestActiveDiscounts(limit);
+        List<BestDiscountDTO> result = new ArrayList<>();
+
+        for (Object[] row : rows) {
+            Long discountId = ((Number) row[0]).longValue();
+            int percentage = ((Number) row[1]).intValue();
+            LocalDate fromDate = ((Date) row[2]).toLocalDate();
+            LocalDate toDate = ((Date) row[3]).toLocalDate();
+            double price = ((Number) row[4]).doubleValue();
+            Long storeId = ((Number) row[5]).longValue();
+            Long storeProductId = ((Number) row[6]).longValue();
+            String productName = (String) row[7];
+
+            result.add(new BestDiscountDTO(
+                    discountId,
+                    percentage,
+                    fromDate,
+                    toDate,
+                    price,
+                    storeId,
+                    storeProductId,
+                    productName
+            ));
+        }
+
+        return result;
+    }
+
+    //
+    // UPDATE endpoints BROKEN - TO DO
+    //
 
 //    @Transactional
 //    public void updateDiscountById(Long id,

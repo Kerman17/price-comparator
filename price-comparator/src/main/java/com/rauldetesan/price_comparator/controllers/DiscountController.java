@@ -1,10 +1,12 @@
 package com.rauldetesan.price_comparator.controllers;
 
 
+import com.rauldetesan.price_comparator.dtos.BestDiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
 import com.rauldetesan.price_comparator.services.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -46,6 +48,12 @@ public class DiscountController {
     @DeleteMapping("{discountId}")
     public void deleteDiscountById(@PathVariable Long discountId){
         discountService.deleteDiscountById(discountId);
+    }
+
+    @GetMapping("/best")
+    public ResponseEntity<List<BestDiscountDTO>> findBestActiveDiscounts(
+            @RequestParam(defaultValue = "10") int limit){
+        return ResponseEntity.ok(discountService.findBestActiveDiscounts(limit));
     }
 
 //    @PutMapping("{discountId}")
