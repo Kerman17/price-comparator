@@ -35,5 +35,18 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
     // because multiple entities are called
     List<Object[]> findBestActiveDiscounts(@Param("limit") int limit);
 
+    @Query(value = """
+    SELECT
+    d.id,
+    d.from_date,
+    d.to_date,
+    d.percentage
+    FROM discounts d
+    WHERE d.from_date >= NOW() - interval '24 HOURS'
+    ORDER BY d.from_date DESC
+    
+""", nativeQuery = true)
+    List<Object[]> findDiscountsAddedInTheLast24H();
+
 
 }

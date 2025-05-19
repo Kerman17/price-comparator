@@ -3,6 +3,7 @@ package com.rauldetesan.price_comparator.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "discounts")
@@ -19,11 +20,17 @@ public class Discount {
     @Column(nullable = false)
     private String productId;
 
+    @Column(nullable = false)
     private LocalDate fromDate;
 
+    @Column(nullable = false)
     private LocalDate toDate;
 
+    @Column(nullable = false)
     private double percentage;
+
+    @Column(nullable = false)
+    LocalDateTime created_at = LocalDateTime.now();
 
     public Discount() {
     }
@@ -36,6 +43,7 @@ public class Discount {
         this.toDate = toDate;
         this.percentage = percentage;
     }
+
 
     public Long getId() {
         return id;
@@ -83,6 +91,14 @@ public class Discount {
 
     public void setPercentage(double percentage) {
         this.percentage = percentage;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
     }
 
     @Override

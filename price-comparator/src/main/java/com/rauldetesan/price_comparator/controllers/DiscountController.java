@@ -4,7 +4,9 @@ package com.rauldetesan.price_comparator.controllers;
 import com.rauldetesan.price_comparator.dtos.BestDiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountsInLast24hDTO;
 import com.rauldetesan.price_comparator.services.DiscountService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +58,12 @@ public class DiscountController {
         return ResponseEntity.ok(discountService.findBestActiveDiscounts(limit));
     }
 
+    @GetMapping("/last-24h")
+    public ResponseEntity<List<DiscountsInLast24hDTO>> findDiscountsAddedInTheLast24H(){
+        List<DiscountsInLast24hDTO> discounts = discountService.findDiscountsAddedInTheLast24H();
+
+        return ResponseEntity.ok(discounts);
+    }
 //    @PutMapping("{discountId}")
 //    public void updateDiscountById(@PathVariable Long discountId,
 //                                   @RequestParam LocalDate fromDate,

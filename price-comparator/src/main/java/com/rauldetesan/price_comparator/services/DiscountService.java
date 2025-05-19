@@ -5,16 +5,14 @@ import com.rauldetesan.price_comparator.domain.StoreProduct;
 import com.rauldetesan.price_comparator.dtos.BestDiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountDTO;
 import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountsInLast24hDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.DiscountRepository;
 import com.rauldetesan.price_comparator.repositories.StoreProductRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -100,6 +98,26 @@ public class DiscountService {
             ));
         }
 
+        return result;
+    }
+
+    public List<DiscountsInLast24hDTO> findDiscountsAddedInTheLast24H(){
+        List<Object[]> rows = discountRepository.findDiscountsAddedInTheLast24H();
+        List<DiscountsInLast24hDTO> result = new ArrayList<>();
+
+        for (Object[] row : rows) {
+            Long discountId = ((Number) row[0]).longValue();
+            LocalDate fromDate = ((Date) row[1]).toLocalDate();
+            LocalDate toDate = ((Date) row[2]).toLocalDate();
+            int percentage = ((Number) row[3]).intValue();
+
+            result.add(new DiscountsInLast24hDTO(
+                    discountId,
+                    fromDate,
+                    toDate,
+                    percentage
+            ));
+        }
         return result;
     }
 
