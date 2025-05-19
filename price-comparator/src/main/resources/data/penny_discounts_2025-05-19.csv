@@ -1,0 +1,15 @@
+product_id;product_name;brand;package_quantity;package_unit;product_category;from_date;to_date;percentage_of_discount  
+P007;meteoritzi covrigi;Meteoritzi;75;g;gustări;2025-05-19;2025-06-19;10
+P009;tăiței de orez;Mei Tai Asia;100;g;mâncare de stradă;2025-05-19;2025-06-19;8.5
+P010;tăiței mie;Mei Tai Asia;250;g;mâncare de stradă;2025-05-19;2025-06-19;2
+P011;sos de soia;Mei Tai Asia;250;ml;sosuri;2025-05-19;2025-06-19;5
+P013;sos chili;Mei Tai Asia;700;ml;sosuri;2025-05-19;2025-06-19;12.5
+P017;mango felii;Mei Tai Asia;425;g;fructe conservate;2025-05-19;2025-06-19;1
+P019;noodles chinezesc;Mei Tai Asia;330;g;mâncare de stradă;2025-05-19;2025-06-19;25
+P020;lapte zuzu;Zuzu;2.5;l;lactate;2025-05-19;2025-06-19;6.5
+P021;iaurt grecesc;Olympus;450;g;lactate;2025-05-19;2025-06-19;9.99
+P023;ouă mărimea M;Ferma Veche;20;buc;ouă;2025-05-19;2025-06-19;6
+P027;brânză telemea;Hochland;0.250;kg;lactate;2025-05-19;2025-06-19;7.5
+P029;pâine albă;K-Classic;0.44;kg;panificație;2025-05-19;2025-06-19;3
+P033;roșii cherry;K-Bio;330;kg;legume și fructe;2025-05-19;2025-06-19;40
+P034;cartofi albi;Penny;1;kg;legume și fructe;2025-05-19;2025-06-19;8.5
