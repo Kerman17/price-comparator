@@ -127,8 +127,20 @@ public class DataLoader implements CommandLineRunner {
             LocalDate toDate = LocalDate.parse((parts[7].trim()));
             double percentage = Double.parseDouble(parts[8].trim());
 
-            Discount discount = new Discount(null, null, productId,
-                    fromDate, toDate, percentage);
+            Optional<StoreProduct> storeProduct =
+                    storeProductRepository.findLatestByStoreNameAndProductId(store.getId(),productId);
+
+            Discount discount = new Discount();
+
+            if(storeProduct.isPresent()){
+                StoreProduct product = storeProduct.get();
+                discount = new Discount(null, product, productId,
+                        fromDate, toDate, percentage);
+            }else{
+                discount = new Discount(null, null, productId,
+                        fromDate, toDate, percentage);
+            }
+
             discountRepository.save(discount);
         }
 
