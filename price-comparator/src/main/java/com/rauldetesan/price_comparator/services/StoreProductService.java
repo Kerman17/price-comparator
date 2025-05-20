@@ -4,7 +4,9 @@ import com.rauldetesan.price_comparator.domain.Store;
 import com.rauldetesan.price_comparator.domain.StoreProduct;
 import com.rauldetesan.price_comparator.dtos.PriceHistoryDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductDTO;
+import com.rauldetesan.price_comparator.dtos.StoreProductRecommendationDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductResponseDTO;
+import com.rauldetesan.price_comparator.enums.Unit;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.StoreProductRepository;
 import com.rauldetesan.price_comparator.repositories.StoreRepository;
@@ -13,8 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -133,6 +136,37 @@ public class StoreProductService {
 
             return new PriceHistoryDTO(date, price, product, brandName, category, store);
         }).collect(Collectors.toList());
+    }
+
+    public List<StoreProductRecommendationDTO> findSameCategoryStoreProducts(String categoryName, String storeName){
+        List<Object[]> results = storeProductRepository.findSameCategoryStoreProducts(categoryName, storeName);
+
+        return results.stream().map(row ->{
+            String productName = (String) row[0];
+            String brand = (String) row[1];
+            String category = (String) row[2];
+            double quantity = ((Number) row[3]).doubleValue();
+            String unitStr = (String) row[4];
+            BigDecimal price = (BigDecimal) row[5];
+            String currency = (String) row[6];
+            LocalDateTime lastUpdated = ((Timestamp) row[7]).toLocalDateTime();
+            String store = (String) row[8];
+            double pricePerUnit = ((Number) row[9]).doubleValue();
+
+            return new StoreProductRecommendationDTO(
+                    productName,
+                    brand,
+                    category,
+                    quantity,
+                    Unit.valueOf(unitStr),
+                    price.doubleValue(),
+                    currency,
+                    store,
+                    // converting to string so we can format to 2 decimals, then back to double
+                    Double.parseDouble(String.format("%.2f", pricePerUnit)) ,
+                    lastUpdated
+            );
+                }).collect(Collectors.toList());
     }
 
 }

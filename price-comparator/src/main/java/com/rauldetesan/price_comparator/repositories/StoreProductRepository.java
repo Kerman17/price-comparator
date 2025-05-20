@@ -63,7 +63,15 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
     @Query(value =
             """
     SELECT
-        p, s.store_name,
+            p.product_name,
+            p.brand,
+            p.category_name,
+            p.package_quantity,
+            p.package_unit,
+            p.price,
+            p.currency,
+            p.last_updated,
+            s.store_name,
         CASE
             WHEN p.package_unit = 'G' THEN p.price / (p.package_quantity / 1000)
             WHEN p.package_unit = 'ML' THEN p.price / (p.package_quantity / 1000)
@@ -73,11 +81,14 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
     JOIN stores s on p.store_id = s.store_id
     WHERE p.category_name = :categoryName
         AND p.price IS NOT NULL AND p.package_quantity IS NOT NULL
-        AND (:store_name IS NULL OR s.store_name= :store_name)
+        AND (:storeName IS NULL OR s.store_name= :storeName)
         AND (p.last_updated >= NOW() - interval '7 days')
     ORDER BY price_per_unit ASC
     LIMIT 10
 """, nativeQuery = true)
-    List<Object[]> findSameCategoryStoreProducts();
+    List<Object[]> findSameCategoryStoreProducts(
+            @Param("categoryName") String categoryName,
+            @Param("storeName") String storeName
+    );
 
 }
