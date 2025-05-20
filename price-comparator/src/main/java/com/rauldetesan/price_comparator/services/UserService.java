@@ -1,0 +1,61 @@
+package com.rauldetesan.price_comparator.services;
+
+import com.rauldetesan.price_comparator.domain.User;
+import com.rauldetesan.price_comparator.dtos.UserDTOS.UserResponseDTO;
+import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
+import com.rauldetesan.price_comparator.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<UserResponseDTO> getAllUsers(){
+        List<User> userList = userRepository.findAll();
+
+        return entityListToDtoList(userList);
+    }
+
+    public UserResponseDTO getUserById(Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " does not exist"));
+
+        return entityToDTO(user);
+    }
+
+    public void addUser(User user){
+        userRepository.save(user);
+    }
+
+    public UserResponseDTO entityToDTO(User user){
+        UserResponseDTO dto = new UserResponseDTO();
+
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setPriceAlerts(user.getPriceAlerts());
+
+        return dto;
+    }
+
+    public List<UserResponseDTO> entityListToDtoList(List<User> users){
+        List<UserResponseDTO> dtoList = new ArrayList<>();
+
+        for(User user : users){
+            UserResponseDTO dto = entityToDTO(user);
+
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
+}
