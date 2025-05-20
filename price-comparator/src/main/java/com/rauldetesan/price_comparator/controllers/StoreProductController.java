@@ -2,6 +2,7 @@ package com.rauldetesan.price_comparator.controllers;
 
 import com.rauldetesan.price_comparator.dtos.PriceHistoryDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductDTO;
+import com.rauldetesan.price_comparator.dtos.StoreProductRecommendationDTO;
 import com.rauldetesan.price_comparator.dtos.StoreProductResponseDTO;
 import com.rauldetesan.price_comparator.services.StoreProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,13 @@ public class StoreProductController {
     ){
         return storeProductService
                 .findPriceHistoryByProductName(productName, storeName, brand, categoryName);
+    }
+
+    @GetMapping("/recommendations")
+    public List<StoreProductRecommendationDTO> findSameCategoryStoreProducts(
+            @RequestParam String categoryName,
+            @RequestParam(required = false) String storeName){
+        return storeProductService.findSameCategoryStoreProducts(categoryName, storeName);
     }
 
 }
