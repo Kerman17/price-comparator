@@ -1,6 +1,7 @@
 package com.rauldetesan.price_comparator.dtos.UserDTOS;
 
 import com.rauldetesan.price_comparator.domain.PriceAlert;
+import com.rauldetesan.price_comparator.dtos.PriceAlertDTOS.PriceAlertDTO;
 
 import java.util.List;
 
@@ -9,18 +10,21 @@ public class UserResponseDTO {
     private String email;
     //private String password;
     private String name;
-    List<PriceAlert> priceAlerts;
+    List<PriceAlertDTO> priceAlerts;
+    List<String> notifications;
 
     public UserResponseDTO() {
 
     }
 
-    public UserResponseDTO(Long id, String email, String password, String name, List<PriceAlert> priceAlerts) {
+    public UserResponseDTO(Long id, String email, String password, String name
+            , List<PriceAlertDTO> priceAlerts, List<String> notifications) {
         this.id = id;
         this.email = email;
 
         this.name = name;
         this.priceAlerts = priceAlerts;
+        this.notifications = notifications;
     }
 
     public Long getId() {
@@ -49,11 +53,19 @@ public class UserResponseDTO {
         this.name = name;
     }
 
-    public List<PriceAlert> getPriceAlerts(List<PriceAlert> priceAlerts) {
-        return this.priceAlerts;
+    public List<PriceAlertDTO> getPriceAlerts() {
+        return priceAlerts;
     }
 
-    public void setPriceAlerts(List<PriceAlert> priceAlerts) {
+    public void setPriceAlerts(List<PriceAlertDTO> priceAlerts) {
         this.priceAlerts = priceAlerts;
+    }
+
+    public List<String> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<String> notifications) {
+        this.notifications = notifications;
     }
 }

@@ -2,6 +2,7 @@ package com.rauldetesan.price_comparator.controllers;
 
 import com.rauldetesan.price_comparator.domain.PriceAlert;
 import com.rauldetesan.price_comparator.dtos.PriceAlertDTOS.PriceAlertDTO;
+import com.rauldetesan.price_comparator.dtos.PriceAlertDTOS.PriceAlertResponseDTO;
 import com.rauldetesan.price_comparator.services.PriceAlertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class PriceAlertController {
     }
 
     @GetMapping
-    public List<PriceAlert> findAllPriceAlerts(){
+    public List<PriceAlertResponseDTO> findAllPriceAlerts(){
         return priceAlertService.getAllPriceAlerts();
     }
 

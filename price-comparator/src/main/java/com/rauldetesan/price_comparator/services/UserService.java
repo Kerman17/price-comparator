@@ -1,6 +1,7 @@
 package com.rauldetesan.price_comparator.services;
 
 import com.rauldetesan.price_comparator.domain.User;
+import com.rauldetesan.price_comparator.dtos.PriceAlertDTOS.PriceAlertDTO;
 import com.rauldetesan.price_comparator.dtos.UserDTOS.UserResponseDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -42,7 +44,20 @@ public class UserService {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
-        dto.setPriceAlerts(user.getPriceAlerts());
+
+        List<PriceAlertDTO> priceAlertDTOS = user.getPriceAlerts().stream().map(alert -> {
+            PriceAlertDTO priceAlertDTO = new PriceAlertDTO();
+            priceAlertDTO.setId(alert.getId());
+            priceAlertDTO.setTargetPrice(alert.getTargetPrice());
+            priceAlertDTO.setUserId(alert.getUser().getId());
+            priceAlertDTO.setProductName(alert.getProductName());
+
+            return priceAlertDTO;
+        }).toList();
+
+        dto.setPriceAlerts(priceAlertDTOS);
+        dto.setNotifications(user.getNotifications());
+
 
         return dto;
     }

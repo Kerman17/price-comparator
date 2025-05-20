@@ -26,6 +26,19 @@ public class User {
     @OneToMany(mappedBy = "user", cascade=CascadeType.ALL, orphanRemoval = true)
     List<PriceAlert> priceAlerts = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "user_notifications", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "notifications")
+    private List<String> notifications = new ArrayList<>();
+
+    public void addNotification(String notification){
+        notifications.add(notification);
+    }
+
+    public void deleteNotification(String notification){
+        notifications.remove(notification);
+    }
+
     public void addAlert(PriceAlert alert){
         priceAlerts.add(alert);
         alert.setUser(this);
@@ -92,5 +105,13 @@ public class User {
 
     public void setPriceAlerts(List<PriceAlert> priceAlerts) {
         this.priceAlerts = priceAlerts;
+    }
+
+    public List<String> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<String> notifications) {
+        this.notifications = notifications;
     }
 }
