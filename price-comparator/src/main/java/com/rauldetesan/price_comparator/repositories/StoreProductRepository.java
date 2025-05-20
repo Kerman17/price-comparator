@@ -91,4 +91,6 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
             @Param("storeName") String storeName
     );
 
+    List<StoreProduct> findByNameIgnoreCase(String productName);
+
 }
