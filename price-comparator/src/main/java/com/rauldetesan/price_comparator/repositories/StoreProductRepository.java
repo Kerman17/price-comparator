@@ -54,4 +54,30 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
             @Param("categoryName") String categoryName
     );
 
+
+    /*
+        This query is used to return all products from the same category
+        updated in the last 7 days ordered by price_per_unit after
+        normalization of unit. Used to recommend better substitutes to the user
+     */
+    @Query(value =
+            """
+    SELECT
+        p, s.store_name,
+        CASE
+            WHEN p.package_unit = 'G' THEN p.price / (p.package_quantity / 1000)
+            WHEN p.package_unit = 'ML' THEN p.price / (p.package_quantity / 1000)
+            ELSE p.price / p.package_quantity
+        END AS price_per_unit
+    FROM store_products p
+    JOIN stores s on p.store_id = s.store_id
+    WHERE p.category_name = :categoryName
+        AND p.price IS NOT NULL AND p.package_quantity IS NOT NULL
+        AND (:store_name IS NULL OR s.store_name= :store_name)
+        AND (p.last_updated >= NOW() - interval '7 days')
+    ORDER BY price_per_unit ASC
+    LIMIT 10
+""", nativeQuery = true)
+    List<Object[]> findSameCategoryStoreProducts();
+
 }
