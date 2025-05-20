@@ -1,4 +1,4 @@
-package com.rauldetesan.price_comparator.dtos;
+package com.rauldetesan.price_comparator.dtos.DiscountDTOS;
 
 import com.rauldetesan.price_comparator.domain.StoreProduct;
 

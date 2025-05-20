@@ -2,10 +2,10 @@ package com.rauldetesan.price_comparator.services;
 
 import com.rauldetesan.price_comparator.domain.Discount;
 import com.rauldetesan.price_comparator.domain.StoreProduct;
-import com.rauldetesan.price_comparator.dtos.BestDiscountDTO;
-import com.rauldetesan.price_comparator.dtos.DiscountDTO;
-import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
-import com.rauldetesan.price_comparator.dtos.DiscountsInLast24hDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.BestDiscountDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.DiscountDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.DiscountResponseDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.DiscountsInLast24hDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
 import com.rauldetesan.price_comparator.repositories.DiscountRepository;
 import com.rauldetesan.price_comparator.repositories.StoreProductRepository;

@@ -1,9 +1,9 @@
 package com.rauldetesan.price_comparator.controllers;
 
-import com.rauldetesan.price_comparator.dtos.PriceHistoryDTO;
-import com.rauldetesan.price_comparator.dtos.StoreProductDTO;
-import com.rauldetesan.price_comparator.dtos.StoreProductRecommendationDTO;
-import com.rauldetesan.price_comparator.dtos.StoreProductResponseDTO;
+import com.rauldetesan.price_comparator.dtos.StoreProductDTOS.PriceHistoryDTO;
+import com.rauldetesan.price_comparator.dtos.StoreProductDTOS.StoreProductDTO;
+import com.rauldetesan.price_comparator.dtos.StoreProductDTOS.StoreProductRecommendationDTO;
+import com.rauldetesan.price_comparator.dtos.StoreProductDTOS.StoreProductResponseDTO;
 import com.rauldetesan.price_comparator.services.StoreProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.rauldetesan.price_comparator.dtos;
+package com.rauldetesan.price_comparator.dtos.StoreProductDTOS;
 
 import com.rauldetesan.price_comparator.enums.Unit;
 

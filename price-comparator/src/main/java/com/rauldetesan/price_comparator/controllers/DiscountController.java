@@ -1,17 +1,15 @@
 package com.rauldetesan.price_comparator.controllers;
 
 
-import com.rauldetesan.price_comparator.dtos.BestDiscountDTO;
-import com.rauldetesan.price_comparator.dtos.DiscountDTO;
-import com.rauldetesan.price_comparator.dtos.DiscountResponseDTO;
-import com.rauldetesan.price_comparator.dtos.DiscountsInLast24hDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.BestDiscountDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.DiscountDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.DiscountResponseDTO;
+import com.rauldetesan.price_comparator.dtos.DiscountDTOS.DiscountsInLast24hDTO;
 import com.rauldetesan.price_comparator.services.DiscountService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController

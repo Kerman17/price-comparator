@@ -46,6 +46,8 @@ public class StoreProduct {
     @Column(name="last_updated")
     private LocalDateTime lastUpdated = LocalDateTime.now();
 
+
+
     public StoreProduct() {
     }
 
