@@ -2,6 +2,7 @@ package com.rauldetesan.price_comparator.controllers;
 
 import com.rauldetesan.price_comparator.dtos.BasketDTOS.BasketDTO;
 import com.rauldetesan.price_comparator.dtos.BasketDTOS.BasketResponseDTO;
+import com.rauldetesan.price_comparator.dtos.BasketDTOS.CheapestProductDTO;
 import com.rauldetesan.price_comparator.services.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,14 @@ public class BasketController {
     public void addBasket(@RequestBody BasketDTO basketDTO){
         basketService.addBasket(basketDTO);
     }
+
+    @GetMapping("/{basketID}/cheapest-options")
+    public List<CheapestProductDTO> getCheapestBasketOptions(
+            @PathVariable Long basketID){
+        return basketService.findCheapestProductsForBasket(basketID);
+    }
+
+
 
 
 }
