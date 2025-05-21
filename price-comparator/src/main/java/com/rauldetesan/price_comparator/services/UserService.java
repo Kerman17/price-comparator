@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class UserService {
@@ -44,6 +44,7 @@ public class UserService {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
+        dto.setBasketId(user.getBasket().getId());
 
         List<PriceAlertDTO> priceAlertDTOS = user.getPriceAlerts().stream().map(alert -> {
             PriceAlertDTO priceAlertDTO = new PriceAlertDTO();
