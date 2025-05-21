@@ -31,8 +31,8 @@ public class User {
     @Column(name = "notifications")
     private List<String> notifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BasketItem> basketItems = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Basket basket;
 
     public void addNotification(String notification){
         notifications.add(notification);
@@ -118,11 +118,11 @@ public class User {
         this.notifications = notifications;
     }
 
-    public List<BasketItem> getBasketItems() {
-        return basketItems;
+    public Basket getBasket() {
+        return basket;
     }
 
-    public void setBasketItems(List<BasketItem> basketItems) {
-        this.basketItems = basketItems;
+    public void setBasket(Basket basket) {
+        this.basket = basket;
     }
 }

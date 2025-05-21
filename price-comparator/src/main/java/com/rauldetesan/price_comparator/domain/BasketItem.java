@@ -14,17 +14,17 @@ public class BasketItem {
     private String preferredStore;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private User user;
+    @JoinColumn(name = "basket_id")
+    private Basket basket;
 
     public BasketItem() {
     }
 
-    public BasketItem(Long id, String productName, String preferredStore, User user) {
+    public BasketItem(Long id, String productName, String preferredStore, Basket basket) {
         this.id = id;
         this.productName = productName;
         this.preferredStore = preferredStore;
-        this.user = user;
+        this.basket = basket;
     }
 
     public Long getId() {
@@ -51,11 +51,11 @@ public class BasketItem {
         this.preferredStore = preferredStore;
     }
 
-    public User getUser() {
-        return user;
+    public Basket getBasket() {
+        return basket;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setBasket(Basket basket) {
+        this.basket = basket;
     }
 }
