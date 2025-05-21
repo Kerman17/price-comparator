@@ -31,6 +31,9 @@ public class User {
     @Column(name = "notifications")
     private List<String> notifications = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BasketItem> basketItems = new ArrayList<>();
+
     public void addNotification(String notification){
         notifications.add(notification);
     }
@@ -113,5 +116,13 @@ public class User {
 
     public void setNotifications(List<String> notifications) {
         this.notifications = notifications;
+    }
+
+    public List<BasketItem> getBasketItems() {
+        return basketItems;
+    }
+
+    public void setBasketItems(List<BasketItem> basketItems) {
+        this.basketItems = basketItems;
     }
 }
