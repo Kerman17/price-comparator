@@ -93,4 +93,26 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
 
     List<StoreProduct> findByNameIgnoreCase(String productName);
 
+    @Query(value = """
+SELECT
+    p.product_name,
+    p.brand,
+    p.category_name,
+    p.package_quantity,
+    p.package_unit,
+    p.price,
+    p.currency,
+    p.last_updated,
+    s.store_name
+FROM store_products p
+JOIN stores s on p.store_id = s.store_id
+WHERE p.product_name = :productName
+    AND (:storeName IS NULL OR :storeName = s.store_name)
+    AND (p.last_updated >= NOW() - interval '7 days')
+ORDER BY p.price ASC
+""", nativeQuery = true)
+    List<Object[]> findCheapestByProductName(
+            @Param("productName") String productName,
+            @Param("storeName") String storeName);
+
 }
