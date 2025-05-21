@@ -13,8 +13,8 @@ public class BasketItem {
 
     private String preferredStore;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "basket_id")
+    @ManyToOne()
+    @JoinColumn(name = "basket_id", nullable = false)
     private Basket basket;
 
     public BasketItem() {
