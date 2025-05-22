@@ -46,8 +46,8 @@ public class DiscountService {
 
 
     public void addDiscount(DiscountDTO dto) {
-        StoreProduct storeProduct = storeProductRepository.findById(dto.getStoreProduct().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("StoreProduct with id " + dto.getStoreProduct().getId() + " not found"));
+        StoreProduct storeProduct = storeProductRepository.findById(dto.getStoreProductId())
+                .orElseThrow(() -> new ResourceNotFoundException("StoreProduct with id " + dto.getStoreProductId() + " not found"));
 
         Discount discount = new Discount();
 

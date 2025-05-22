@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class DiscountDTO {
     private Long id;
-    private StoreProduct storeProduct;
+    private Long storeProductId;
     private LocalDate fromDate;
     private LocalDate toDate;
     private double percentage;
@@ -17,14 +17,6 @@ public class DiscountDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public StoreProduct getStoreProduct() {
-        return storeProduct;
-    }
-
-    public void setStoreProduct(StoreProduct storeProduct) {
-        this.storeProduct = storeProduct;
     }
 
     public LocalDate getFromDate() {
@@ -49,5 +41,13 @@ public class DiscountDTO {
 
     public void setPercentage(double percentage) {
         this.percentage = percentage;
+    }
+
+    public Long getStoreProductId() {
+        return storeProductId;
+    }
+
+    public void setStoreProductId(Long storeProductId) {
+        this.storeProductId = storeProductId;
     }
 }

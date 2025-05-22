@@ -59,15 +59,15 @@ public class PriceAlertScheduler {
             for(StoreProduct product : products){
 
                 // Compare every product with the same name targetPrice
-                if(product.getPrice().compareTo(targetPrice)<0){
+                if(product.getPrice().compareTo(targetPrice)<=0){
                     // If targetPrice is lower, we fetch the owner of the alert
                     User user = alert.getUser();
 
                     // Create the notification
-                    String message = "Product " + product.getName() + " reached the set price of " + alert.getTargetPrice()
-                            + " at the store " + product.getStore().getName();
+                    String message = "Produsul " + product.getName() + " a ajuns la pretul de " + alert.getTargetPrice()
+                            + product.getCurrency() + " la magazinul " + product.getStore().getName();
 
-                    System.out.println(message + "FOR USER " + " " + user.getName());
+                    System.out.println(message + " FOR USER " + " " + user.getName());
 
                     // If the user doesn't have the notification already, we add it to their notification list
                     if(!user.getNotifications().contains(message))

@@ -5,7 +5,7 @@ public class BasketItemResponseDTO {
     private Long id;
     private String productName;
     private String preferredStore = "";
-    private Long basketId;
+
 
     public Long getId() {
         return id;
@@ -31,11 +31,5 @@ public class BasketItemResponseDTO {
         this.preferredStore = preferredStore;
     }
 
-    public Long getBasketId() {
-        return basketId;
-    }
 
-    public void setBasketId(Long basketId) {
-        this.basketId = basketId;
-    }
 }

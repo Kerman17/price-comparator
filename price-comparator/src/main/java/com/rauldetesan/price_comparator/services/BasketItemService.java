@@ -2,7 +2,6 @@ package com.rauldetesan.price_comparator.services;
 
 import com.rauldetesan.price_comparator.domain.Basket;
 import com.rauldetesan.price_comparator.domain.BasketItem;
-import com.rauldetesan.price_comparator.dtos.BasketDTOS.BasketDTO;
 import com.rauldetesan.price_comparator.dtos.BasketItemDTOS.BasketItemDTO;
 import com.rauldetesan.price_comparator.dtos.BasketItemDTOS.BasketItemResponseDTO;
 import com.rauldetesan.price_comparator.exceptions.ResourceNotFoundException;
@@ -80,7 +79,7 @@ public class BasketItemService {
         dto.setId(basketItem.getId());
         dto.setPreferredStore(basketItem.getPreferredStore());
         dto.setProductName(basketItem.getProductName());
-        dto.setBasketId(basketItem.getBasket().getId());
+
 
         return dto;
     }

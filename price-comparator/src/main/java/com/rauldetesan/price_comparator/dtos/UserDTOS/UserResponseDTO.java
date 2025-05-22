@@ -9,7 +9,6 @@ import java.util.List;
 public class UserResponseDTO {
     private Long id;
     private String email;
-    //private String password;
     private String name;
     List<PriceAlertDTO> priceAlerts;
     List<String> notifications;
