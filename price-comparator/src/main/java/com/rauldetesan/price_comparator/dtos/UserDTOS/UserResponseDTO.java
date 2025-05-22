@@ -55,7 +55,6 @@ public class UserResponseDTO {
     }
 
 
-
     public String getName() {
         return name;
     }

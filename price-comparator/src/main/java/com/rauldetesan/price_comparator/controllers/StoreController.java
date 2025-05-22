@@ -1,6 +1,7 @@
 package com.rauldetesan.price_comparator.controllers;
 
 import com.rauldetesan.price_comparator.domain.Store;
+import com.rauldetesan.price_comparator.dtos.StoreDTOS.StoreDTO;
 import com.rauldetesan.price_comparator.services.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,12 @@ public class StoreController {
     }
 
     @GetMapping("{storeId}")
-    public Store findStoreById(@PathVariable Long storeId){
+    public StoreDTO findStoreById(@PathVariable Long storeId){
         return storeService.findStoreById(storeId);
     }
 
     @GetMapping
-    public List<Store> findAllStores(){
+    public List<StoreDTO> findAllStores(){
         return storeService.findAllStores();
     }
 

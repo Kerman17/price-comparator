@@ -44,7 +44,12 @@ public class UserService {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
-        dto.setBasketId(user.getBasket().getId());
+
+        if(user.getBasket() != null){
+            dto.setBasketId(user.getBasket().getId());
+        }else{
+            dto.setBasketId(null);
+        }
 
         List<PriceAlertDTO> priceAlertDTOS = user.getPriceAlerts().stream().map(alert -> {
             PriceAlertDTO priceAlertDTO = new PriceAlertDTO();

@@ -32,7 +32,7 @@ public class User {
     private List<String> notifications = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Basket basket;
+    private Basket basket = null;
 
     public void addNotification(String notification){
         notifications.add(notification);
