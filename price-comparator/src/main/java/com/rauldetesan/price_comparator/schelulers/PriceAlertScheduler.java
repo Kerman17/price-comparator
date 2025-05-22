@@ -29,31 +29,47 @@ public class PriceAlertScheduler {
         this.userRepository = userRepository;
     }
 
-    @Scheduled(fixedRate = 600000) // every 10 mins
+    /**
+     * Goes through all the active PriceAlerts and extracts the productName and targetPrice from every PriceAlert
+     * Searches in the StoreProduct table all the products with the productName specified by the user in the PriceAlert
+     * Goes through all the found products and compares the price with the targetPrice specified by the user in the PriceAlert
+     * If the price is strictly lower than the targetPrice, the app sends a notification to the user regarding the cheaper product
+     *
+     */
+
+    @Scheduled(fixedRate = 600000) // every 10 minutes
     public void checkPriceAlerts(){
 
+        // Fetch all the PriceAlerts
         List<PriceAlert> alerts = priceAlertRepository.findAll();
 
         for(PriceAlert alert : alerts){
 
+            // Extract the productName and normalize it to lowercase and the targetPrice
             String productName = alert.getProductName().toLowerCase();
             BigDecimal targetPrice = alert.getTargetPrice();
 
+            // Fetch all the existing products with name productName
             List<StoreProduct> products = storeProductRepository
                     .findByNameIgnoreCase(productName);
 
-            // System.out.println("NUMBER OF PRODUCTS  " + products.size());
+            System.out.println("FOUND MATCHING NUMBER OF PRODUCTS  " + products.size());
+
 
             for(StoreProduct product : products){
 
-                if(product.getPrice().compareTo(targetPrice)<=0){
+                // Compare every product with the same name targetPrice
+                if(product.getPrice().compareTo(targetPrice)<0){
+                    // If targetPrice is lower, we fetch the owner of the alert
                     User user = alert.getUser();
 
+                    // Create the notification
                     String message = "Product " + product.getName() + " reached the set price of " + alert.getTargetPrice()
                             + " at the store " + product.getStore().getName();
 
-                    // System.out.println(message + "FOR USER " + user.getName());
+                    System.out.println(message + "FOR USER " + " " + user.getName());
 
+                    // If the user doesn't have the notification already, we add it to their notification list
                     if(!user.getNotifications().contains(message))
                         user.addNotification(message);
 

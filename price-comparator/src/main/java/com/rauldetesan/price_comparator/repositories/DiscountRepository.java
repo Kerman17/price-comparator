@@ -13,6 +13,14 @@ import java.util.List;
 public interface DiscountRepository extends JpaRepository<Discount, Long> {
     //Best active discounts
 
+    /**
+     *
+     * This query goes through the store_products and searches for store_products with discounts
+     * Searches if the current date is between the discount's from_date and to_date (i.e. the discount is active right now)
+     *
+     * @param limit limit of discounts to fetch - default set to 10
+     *
+     */
     @Query(value = """
     SELECT
     d.id,
@@ -29,9 +37,12 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
     ORDER BY d.percentage DESC
     LIMIT :limit
 """, nativeQuery = true)
-    // We set the type to Object because JPA returns as Object
-    // because multiple entities are called
+    // We set the type to Object because JPA returns as Object because multiple entities are called
     List<Object[]> findBestActiveDiscounts(@Param("limit") int limit);
+
+    /**
+     * This query outputs all discounts added in the last 24h from latest to oldest
+     */
 
     @Query(value = """
     SELECT

@@ -13,8 +13,7 @@ import java.util.Optional;
 public interface StoreProductRepository extends JpaRepository<StoreProduct, Long> {
 
     /*
-        This query searches for the last updated StoreProduct
-        with the storeId and productId
+        This query searches for the last updated StoreProduct with the storeId and productId
      */
     @Query(
             """
@@ -28,6 +27,23 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
     Optional<StoreProduct> findLatestByStoreNameAndProductId(@Param("storeId") Long storeId,
                                                @Param("productId") String productId);
 
+
+    /**
+     *
+     * Returns price history of product with productName, filterable by store, brand, category
+     * Returns date - price - productName - brand - categoryName - storeName
+     *
+     * If only productName is completed, the query returns the price changes of product across all the tracked stores
+     * If storeName is completed too, the query returns the price changes of product across that store
+     * For brand, the query returns the price changes of product with said brand
+     * For categoryName, the query returns the price changes of product with said category name
+     *
+     * @param productName name of the product for which we are looking for the price history
+     * @param storeName filter for store name
+     * @param brand filter for brand
+     * @param categoryName filter for category of the product
+     *
+     */
 
     @Query(value =
             """
@@ -55,10 +71,14 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
     );
 
 
-    /*
-        This query is used to return all products from the same category
-        updated in the last 7 days ordered by price_per_unit after
-        normalization of unit. Used to recommend better substitutes to the user
+    /**
+     * This query is used to return all products from the same category
+     * updated in the last 7 days ordered by price_per_unit after normalization of unit.
+     * Used to recommend better product substitutes to the user.
+     *
+     * @param categoryName is the required parameter
+     * @param storeName can be added to filter by store
+     *
      */
     @Query(value =
             """
@@ -90,8 +110,16 @@ public interface StoreProductRepository extends JpaRepository<StoreProduct, Long
             @Param("categoryName") String categoryName,
             @Param("storeName") String storeName
     );
-
     List<StoreProduct> findByNameIgnoreCase(String productName);
+
+    /**
+     *
+     * This query returns the cheapest products with name as productName - used in BasketService as a helper method
+     *
+     * @param productName is the required parameter, represents the name of the product for which we search for the cheapest one
+     * @param storeName is used to filter by the store
+     *
+     */
 
     @Query(value = """
 SELECT
