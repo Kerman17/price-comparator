@@ -37,7 +37,7 @@ public class PriceAlertScheduler {
      *
      */
 
-    @Scheduled(fixedRate = 10_000)
+    @Scheduled(fixedRate = 10_000) // change to 600_000 every 10 minutes
     public void checkPriceAlerts(){
 
         // Fetch all the PriceAlerts
